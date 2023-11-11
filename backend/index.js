@@ -27,7 +27,8 @@ const corsOptions = {
             //No esta permitido
             callback(new Error('Error de cors...'))
         }
-    }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
 }
 
 app.use(cors(corsOptions))
