@@ -16,7 +16,24 @@ const ModalFormularioTarea = ( ) => {
 
     const params = useParams()
 
-    const {modalFormularioTarea, handleModalTarea, mostrarAlerta, alerta,submitTarea } = useProyectos();
+    const {modalFormularioTarea, handleModalTarea, mostrarAlerta, alerta,submitTarea,tarea } = useProyectos();
+
+    useEffect(() => {
+        if(tarea?._id) {
+            setId(tarea._id)
+            setNombre(tarea.nombre)
+            setDescripcion(tarea.descripcion)
+            setFechaEntrega(tarea.fechaEntrega?.split('T')[0])
+            setPrioridad(tarea.prioridad)
+            return
+        } 
+        setId('')
+        setNombre('')
+        setDescripcion('')
+        setFechaEntrega('')
+        setPrioridad('')
+        
+    }, [tarea]);
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -92,7 +109,7 @@ const ModalFormularioTarea = ( ) => {
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-lg leading-6 font-bold text-gray-900">
-                                        Crear Tarea
+                                        {id ? 'Editar Tarea': 'Crear Tarea'}
                                     </Dialog.Title>
 
                                     {msg && <Alerta alerta={alerta} />}

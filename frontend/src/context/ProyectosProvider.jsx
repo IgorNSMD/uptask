@@ -10,7 +10,8 @@ const ProyectosProvider = ({children}) => {
     const [alerta, setAlerta] = useState({});
     const [proyecto, setProyecto] = useState({});
     const [cargando, setCargando] = useState(false);
-    const [ modalFormularioTarea, setModalFormularioTarea ] = useState(false)
+    const [modalFormularioTarea, setModalFormularioTarea ] = useState(false)
+    const [tarea, setTarea] = useState({})
 
     const navigate = useNavigate();
 
@@ -196,7 +197,7 @@ const ProyectosProvider = ({children}) => {
 
     const handleModalTarea = () => {
         setModalFormularioTarea(!modalFormularioTarea)
-        //setTarea({})
+        setTarea({})
     }
 
     const submitTarea = async tarea => {
@@ -220,10 +221,14 @@ const ProyectosProvider = ({children}) => {
                 }
             }
 
-            const { data } = await clienteAxios.post('/tareas', tarea, config)
+            const { data } = await clienteAxios.post('/tareas', tarea, config)
 
             setAlerta({})
             setModalFormularioTarea(false)
+
+            const proyectoActualizado = { ...proyecto }
+            proyectoActualizado.tareas = [ ...proyecto.tareas, data ]
+            setProyecto(proyectoActualizado)
 
             // SOCKET IO
             //socket.emit('nueva tarea', data)
@@ -256,6 +261,12 @@ const ProyectosProvider = ({children}) => {
         }
     }    
 
+    const handleModalEditarTarea = tarea => {
+        setTarea(tarea)
+        setModalFormularioTarea(true)
+    }
+
+
     return (
 
         <ProyectosContext.Provider
@@ -270,7 +281,9 @@ const ProyectosProvider = ({children}) => {
                 eliminarProyecto,
                 modalFormularioTarea, 
                 handleModalTarea,
-                submitTarea
+                submitTarea,
+                handleModalEditarTarea,
+                tarea,
             }} 
         >
             {children}
