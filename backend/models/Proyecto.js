@@ -18,11 +18,11 @@ const proyectosSchema = mongoose.Schema(
         },
         cliente:{
             type: String,
-            require: true,
-            trim:true
+            trim:true,            
+            require: true
         },
         creador:{
-            type:mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref:"Usuario"
         },
         tareas: [
