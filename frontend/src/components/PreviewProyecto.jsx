@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 
 const PreviewProyecto = ({proyecto}) => {
 
-    const { nombre, _id, cliente, creador} = proyecto
+    const { auth } = useAuth()
+
+    const { nombre, _id, cliente, creador} = proyecto
 
   return (
         <div className='border-b p-5 flex flex-col md:flex-row justify-between'>
@@ -16,9 +19,9 @@ const PreviewProyecto = ({proyecto}) => {
                     </span>
                 </p>
                 
-                {/* {auth._id !== creador && (
+                {auth._id !== creador && (
                     <p className='p-1 text-xs rounded-lg text-white bg-green-500 font-bold uppercase'>Colaborador</p>
-                )} */}
+                )}
             </div>
 
             <Link

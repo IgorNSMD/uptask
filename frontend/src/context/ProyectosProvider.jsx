@@ -141,7 +141,7 @@ const ProyectosProvider = ({children}) => {
              setProyecto(data)
              setAlerta({})
         } catch (error) {
-            // navigate('/proyectos')
+            navigate('/proyectos')
             setAlerta({
                 msg: error.response.data.msg,
                 error: true
